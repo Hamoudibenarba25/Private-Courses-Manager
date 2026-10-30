@@ -1,4 +1,4 @@
-# Private Teaching Manager
+# Private Teaching Manager v1.1.0
 
 An installable, offline-first Progressive Web App (PWA) for managing private-course and CEFR students, group sessions, payment obligations, instalments, book charges, revenue shares and receipts.
 
@@ -8,7 +8,9 @@ An installable, offline-first Progressive Web App (PWA) for managing private-cou
 - CEFR courses: 16-session blocks; course fees become due after each completed block regardless of absences. Students can pay in instalments. Teacher share is 30% of CEFR course-fee payments.
 - CEFR exemptions: course fees only; book charges remain payable.
 - Books: separate book-charge obligations; 100% of book payments belong to the teacher and are excluded from the CEFR revenue split.
-- CEFR receipts: each course-fee instalment generates a numbered receipt with school, teacher, student, course/group, date, amount received, previous payments, remaining balance, payment method and signature/stamp lines. Use the Print button and choose “Save as PDF” if desired.
+- Receipts: every recorded payment (private course, CEFR instalment or book charge) generates a numbered receipt with school, teacher, student, course/group, date, amount received, previous payments, remaining balance, payment method and signature/stamp lines. Use the Print button and choose “Save as PDF” if desired.
+- Group-centred workspace: open any group to add/find students, record sessions and attendance, view obligations, record payments/book charges, and generate or reprint receipts without leaving the group page. The Students, Sessions, Payments and Reports sections are consolidated views of group data.
+- Daily, weekly, monthly and custom-period payment reports, filterable by class/group, with collected totals, teacher/partner shares, outstanding balances and transaction detail.
 - Student profiles, attendance, session history, financial reports, CSV and JSON export/import.
 - English, French and Arabic interface.
 - Automatic local snapshots (up to 20) after data changes, plus manual snapshot, restore and JSON export/import.
@@ -75,3 +77,8 @@ Private payment amount is set per student (or inherited from the group default) 
 ## Payment-cycle correction (v1.0.1)
 
 This build fixes a case where a zero-fee obligation could be created and then remain unusable, leaving the Record Payment dropdown showing only “Select…”. When a private-course group fee or a student's individual fee is entered or updated, the app now synchronises unpaid generated cycles and updates zero-paid obligations. It also generates obligations only when a payable fee is configured. The service-worker cache version is bumped so the updated app is fetched after publication.
+
+
+## Version 1.1.0 update
+
+This release reorganises the Groups page as the main workspace. Existing records remain in the same browser storage database (`ptm_v1_data`) when updating the hosted files in the same browser and origin. The service-worker cache has been bumped so the new interface is fetched. Back up your data before replacing files.
