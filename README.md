@@ -71,3 +71,7 @@ Private payment amount is set per student (or inherited from the group default) 
 - Sessions are retained in the register to preserve payment-cycle accuracy; this initial version does not provide session deletion/editing.
 - Configure the school and teacher details under **Settings & backups** before issuing receipts.
 - Use the browser's print dialog to print a receipt or save it as a PDF.
+
+## Payment-cycle correction (v1.0.1)
+
+This build fixes a case where a zero-fee obligation could be created and then remain unusable, leaving the Record Payment dropdown showing only “Select…”. When a private-course group fee or a student's individual fee is entered or updated, the app now synchronises unpaid generated cycles and updates zero-paid obligations. It also generates obligations only when a payable fee is configured. The service-worker cache version is bumped so the updated app is fetched after publication.
