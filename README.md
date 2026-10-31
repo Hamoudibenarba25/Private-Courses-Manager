@@ -1,4 +1,4 @@
-# Private Teaching Manager v1.2.0
+# Private Teaching Manager v1.3.0
 
 An installable, offline-first Progressive Web App (PWA) for managing private-course and CEFR students, groups, sessions, attendance, payments, receipts and financial reports.
 
@@ -34,7 +34,7 @@ Each payment generates a numbered receipt with school name, teacher name, studen
 2. Open your existing repository and choose **Add file → Upload files**.
 3. Upload the *contents* of the `private-teaching-manager` folder (not the enclosing folder and not the ZIP). `index.html` must be at the repository root.
 4. Allow GitHub to replace files with matching names. Keep the existing repository and branch.
-5. Add a commit message such as `Upgrade to Private Teaching Manager v1.2.0` and commit.
+5. Add a commit message such as `Upgrade to Private Teaching Manager v1.3.0` and commit.
 6. Open **Actions → Pages build and deployment** and wait for the green check.
 7. Reopen the existing Pages address. On desktop use Ctrl+F5 once after deployment; on mobile close and reopen the app after it updates.
 
@@ -81,4 +81,13 @@ Each payment generates a numbered receipt with school name, teacher name, studen
 
 ## Version notes
 
-- v1.2.0: private-course four-session milestones now produce a reminder only; each student's payment is entered manually from the group page. Added an in-app PWA installation prompt when supported, refreshed manifest metadata and icons declarations, and bumped the service-worker cache. Existing local database key retained.
+- v1.3.0: private-course four-session milestones now produce a reminder only; each student's payment is entered manually from the group page. Added an in-app PWA installation prompt when supported, refreshed manifest metadata and icons declarations, and bumped the service-worker cache. Existing local database key retained.
+
+
+## v1.3.0 updates
+- Groups can be edited or permanently deleted with a confirmation that explains linked data deletion.
+- Classroom register now shows student, attended sessions, paid/unpaid status, amount received and receipt access.
+- Private-course payments are manual and can be recorded at any time; select the exact attended session dates covered.
+- Group payment report prints total collected, teacher share and school share with transaction details.
+- Install button is always visible and provides browser-specific fallback instructions; PWA manifest, maskable icon declaration and service-worker cache were refreshed.
+- Private-course payment receipt includes subject and covered session dates.
