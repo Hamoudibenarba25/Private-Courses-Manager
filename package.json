@@ -1,6 +1,6 @@
 {
   "name": "private-teaching-manager",
-  "version": "1.7.0",
+  "version": "1.7.1",
   "private": true,
   "description": "Private Teaching Manager PWA and optional native wrapper",
   "scripts": {
