@@ -1,4 +1,4 @@
-# Private Teaching Manager — PWA project (fresh setup)
+# Private Teaching Manager v1.7.0 — PWA financial management update
 
 This is a static Progressive Web App. It runs in Chrome after deployment over HTTPS; Node.js and an Electron installer are not required for normal use.
 
@@ -30,3 +30,16 @@ Upload the updated project files to the same GitHub repository and push to `main
 
 ## Validation
 The JavaScript source has been syntax-checked. This ZIP is a deployable source project, not a hosted app URL; the live installation icon appears only after GitHub Pages has successfully published it over HTTPS. Test the main workflows before entering your permanent records.
+
+## v1.7.0 additions
+- Removed the standalone Sessions navigation item; attendance remains managed through Cycles and group workspaces.
+- Added a Student Debts view for unpaid attended private/revision sessions and outstanding CEFR obligations.
+- Added a Pay debts workflow for private/revision courses. It applies to the oldest unpaid attended sessions, up to four, records a debt-recovery transaction in the current cycle, and issues a receipt.
+- Added payment edit/delete controls in payment history. Editing also updates the linked receipt; deleting removes the linked receipt.
+- Student profiles allow removal of an individual attendance entry without deleting the whole group session.
+- Added Teacher Payments with per-group cycle summaries, settlement records and printable signature statements.
+- Added teacher loan/advance tracking. Outstanding advances are deducted from the next teacher share and any remaining amount carries forward.
+- The app data store is local to the browser. A fresh installation starts with a fresh database.
+
+## Important accounting and testing notes
+This is an incremental accounting release, not a fully audited bookkeeping system. Cycle income is attributed using the session IDs attached to existing payment records; legacy payments without session allocations may not be assigned to a cycle automatically. Test sample records first. Refund accounting, insurance charge workflows, complete three-language coverage of the new financial screens, and detailed per-student debt schedules on the settlement printout still require further implementation. A cycle settlement is a stored snapshot; do not edit or delete payments belonging to a settled cycle without reviewing the signed statement.
