@@ -1,84 +1,84 @@
-# Private Teaching Manager v1.1.0
+# Private Teaching Manager v1.2.0
 
-An installable, offline-first Progressive Web App (PWA) for managing private-course and CEFR students, group sessions, payment obligations, instalments, book charges, revenue shares and receipts.
+An installable, offline-first Progressive Web App (PWA) for managing private-course and CEFR students, groups, sessions, attendance, payments, receipts and financial reports.
 
-## Included features
+## Main workflow: manage everything from Groups
 
-- Private courses: automatically creates a payment obligation for each active student after every 4 completed group sessions. Absences do not reduce the amount due. Teacher share is 75% of private-course payments.
-- CEFR courses: 16-session blocks; course fees become due after each completed block regardless of absences. Students can pay in instalments. Teacher share is 30% of CEFR course-fee payments.
-- CEFR exemptions: course fees only; book charges remain payable.
-- Books: separate book-charge obligations; 100% of book payments belong to the teacher and are excluded from the CEFR revenue split.
-- Receipts: every recorded payment (private course, CEFR instalment or book charge) generates a numbered receipt with school, teacher, student, course/group, date, amount received, previous payments, remaining balance, payment method and signature/stamp lines. Use the Print button and choose “Save as PDF” if desired.
-- Group-centred workspace: open any group to add/find students, record sessions and attendance, view obligations, record payments/book charges, and generate or reprint receipts without leaving the group page. The Students, Sessions, Payments and Reports sections are consolidated views of group data.
-- Daily, weekly, monthly and custom-period payment reports, filterable by class/group, with collected totals, teacher/partner shares, outstanding balances and transaction detail.
-- Student profiles, attendance, session history, financial reports, CSV and JSON export/import.
-- English, French and Arabic interface.
-- Automatic local snapshots (up to 20) after data changes, plus manual snapshot, restore and JSON export/import.
-- Offline use after the first successful load.
+Open **Groups → Open group** to manage that class in one workspace:
+- Add and search students.
+- Record completed sessions and mark each student's attendance.
+- Review session counts and student payment history.
+- Record individual payments and book charges.
+- Generate, print or reprint receipts.
+- Review balances and group-level financial activity.
 
-## Publish with GitHub Pages
+The Students, Sessions, Payments and Reports pages are consolidated views of the same group records.
 
-1. Extract this ZIP file.
-2. Create a new GitHub repository, for example `private-teaching-manager`.
-3. Upload the **contents** of this folder to the repository root. `index.html` must be at the root, not inside another nested folder.
-4. In the repository, open **Settings → Pages**.
-5. Under Build and deployment, choose **Deploy from a branch**, select `main` and `/(root)`, then Save.
-6. Wait for GitHub Pages to publish. Your address will look like `https://YOUR-USERNAME.github.io/private-teaching-manager/`.
-7. Open the published HTTPS address once while online so the app and offline files can be cached.
+## Payment rules
+
+- **Private courses:** the app does NOT automatically create individual payment obligations. After each 4 completed group sessions, it displays a clear reminder and a toast notification. You then use **Record payment** beside each student to enter that student's payment manually. At that point the app creates the relevant four-session cycle record, accepts a full or partial payment, updates the balance and generates a numbered receipt. Absences do not reduce the fee. Teacher share: 75%.
+- **CEFR courses:** each group follows 16-session blocks. Course-fee obligations are generated after each completed block regardless of individual absences. Instalments are accepted and each payment generates a receipt. Students may be exempt from course fees only. Teacher share: 30%.
+- **Books:** record book charges separately. Book payments belong 100% to the teacher and are excluded from revenue sharing.
+
+## Reports
+
+Generate daily, weekly, monthly or custom-date reports for an individual group or all groups. Reports include amounts collected, teacher share, partner share, book income, outstanding balances already recorded in the app and transaction details. Reports can be printed or saved as PDF from the browser print dialog.
+
+## Receipts
+
+Each payment generates a numbered receipt with school name, teacher name, student name and ID, group/course, date, amount received, payment method, course fee details where relevant, balance after payment, teacher signature label and school stamp area. Use **View / print** from the group payment history or Payments page to reprint a receipt. In the print dialog choose **Save as PDF** to save a PDF copy.
+
+## Publish or update through GitHub Pages
+
+1. Download and extract the ZIP.
+2. Open your existing repository and choose **Add file → Upload files**.
+3. Upload the *contents* of the `private-teaching-manager` folder (not the enclosing folder and not the ZIP). `index.html` must be at the repository root.
+4. Allow GitHub to replace files with matching names. Keep the existing repository and branch.
+5. Add a commit message such as `Upgrade to Private Teaching Manager v1.2.0` and commit.
+6. Open **Actions → Pages build and deployment** and wait for the green check.
+7. Reopen the existing Pages address. On desktop use Ctrl+F5 once after deployment; on mobile close and reopen the app after it updates.
+
+**Data protection:** the application keeps the existing browser database key (`ptm_v1_data`) so records should remain available when you update the same GitHub Pages origin in the same browser profile. Do not clear browser storage or uninstall the existing app while updating. Make a JSON export before replacing files as a precaution.
+
+## Install on Windows
+
+1. Open the published HTTPS GitHub Pages address in current Chrome or Edge.
+2. If the app displays an **Install app** button, click it and confirm.
+3. Otherwise open the browser menu (⋮) and look for **Install page as app** or **Install Private Teaching Manager**.
+4. If installation is still unavailable, check that the site is HTTPS, the manifest loads, both icon files load, and the service worker is registered under DevTools → Application. Reload after GitHub Pages deployment completes.
 
 ## Install on Android
 
-1. Open the GitHub Pages address in Chrome.
-2. Open Chrome’s menu (⋮) and choose **Install app** or **Add to Home screen**.
-3. Confirm. The app will appear on your home screen and open in its own window.
+1. Open the published HTTPS address in Chrome.
+2. Open the Chrome menu (⋮) and choose **Install app** or **Add to Home screen**.
+3. Confirm. The app will appear as an icon and open in its own window.
 
-## Install/use on a computer
+## Offline use and automatic local backups
 
-1. Open the same HTTPS address in Chrome or Edge.
-2. Use the install icon in the address bar, or the browser menu → **Install app**.
-3. You can also keep the site bookmarked; after the first online load, supported browsers can open it offline.
+- The app caches its application files for offline use after the first successful online visit.
+- Student, attendance, payment, receipt and settings data are stored locally in the browser on that device.
+- Up to 20 automatic local snapshots are retained in browser storage after changes. They do not need to be downloaded for routine use.
+- JSON export/import and restore are available for deliberate recovery or moving data.
+- **The computer and Android phone have separate local databases and backups. They do not synchronise with each other.**
+- Clearing site data, resetting a device or uninstalling may remove local records. Keep occasional JSON exports somewhere safe for disaster recovery.
+- GitHub Pages hosts the app files, not student records.
 
-## Local computer testing
+## Financial shares
 
-Opening `index.html` directly works for basic testing, but browser installation and service-worker offline caching require HTTPS or localhost. For local testing with Python installed, open a terminal in the extracted folder and run:
-
-```bash
-python -m http.server 8000
-```
-
-Then visit `http://localhost:8000` in your browser.
-
-## Data privacy and automatic backups — important
-
-- Student, attendance, payment, receipt and settings data are stored in the browser's local storage on the device. The app does not send student records to GitHub or a remote database.
-- Automatic snapshots are stored locally in the same browser profile (up to 20). They do not require you to download a backup.
-- **The computer and Android phone each have their own separate data. There is no automatic cross-device synchronisation.** A JSON export/import is provided when you intentionally need to move data to another device or browser.
-- Clearing browser/app site data, uninstalling in some environments, or resetting the device can remove local records and snapshots. Keep an occasional JSON export in a safe place for disaster recovery.
-- GitHub Pages hosts the app files, not your student records.
-
-## Financial logic
-
-| Payment category | Teacher share | Other party |
+| Category | Teacher | Other party |
 |---|---:|---:|
-| Private course fees | 75% | 25% |
-| CEFR course fees | 30% | 70% |
-| Book charges | 100% | 0% |
+| Private course payments | 75% | 25% |
+| CEFR course-fee payments | 30% | 70% |
+| Book payments | 100% | 0% |
 
-Private payment amount is set per student (or inherited from the group default) for each four-session cycle. CEFR course fees are set per student (or inherited from the group default) for each 16-session cycle. A student's CEFR course-fee exemption does not exempt them from book charges.
+## First-time setup
 
-## Notes
+1. Configure school name, teacher name and signature label in **Settings & backups**.
+2. Create your private-course groups and set each group's default fee per four sessions.
+3. Create or use the predefined CEFR groups and set the course fee per student.
+4. Add students to their groups. Individual fees can override group defaults.
+5. Record each session once and mark attendance.
 
-- Create groups first, then add students to those groups.
-- Record each completed group session once. Payment obligations are generated automatically at the 4-session or 16-session milestones.
-- Sessions are retained in the register to preserve payment-cycle accuracy; this initial version does not provide session deletion/editing.
-- Configure the school and teacher details under **Settings & backups** before issuing receipts.
-- Use the browser's print dialog to print a receipt or save it as a PDF.
+## Version notes
 
-## Payment-cycle correction (v1.0.1)
-
-This build fixes a case where a zero-fee obligation could be created and then remain unusable, leaving the Record Payment dropdown showing only “Select…”. When a private-course group fee or a student's individual fee is entered or updated, the app now synchronises unpaid generated cycles and updates zero-paid obligations. It also generates obligations only when a payable fee is configured. The service-worker cache version is bumped so the updated app is fetched after publication.
-
-
-## Version 1.1.0 update
-
-This release reorganises the Groups page as the main workspace. Existing records remain in the same browser storage database (`ptm_v1_data`) when updating the hosted files in the same browser and origin. The service-worker cache has been bumped so the new interface is fetched. Back up your data before replacing files.
+- v1.2.0: private-course four-session milestones now produce a reminder only; each student's payment is entered manually from the group page. Added an in-app PWA installation prompt when supported, refreshed manifest metadata and icons declarations, and bumped the service-worker cache. Existing local database key retained.
