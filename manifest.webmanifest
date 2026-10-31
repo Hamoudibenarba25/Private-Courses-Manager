@@ -1,12 +1,12 @@
 {
-  "id": "/Private-Courses-Manager/",
+  "id": "./",
   "name": "Private Teaching Manager",
   "short_name": "Teaching Manager",
-  "description": "Manage private, CEFR and revision courses, attendance, payments, receipts and reports.",
+  "description": "Manage private, CEFR and revision courses, attendance, payments, receipts and reports in English, French and Arabic.",
   "lang": "en",
   "dir": "auto",
-  "start_url": "/Private-Courses-Manager/?source=pwa",
-  "scope": "/Private-Courses-Manager/",
+  "start_url": "./?source=pwa",
+  "scope": "./",
   "display": "standalone",
   "display_override": [
     "standalone",

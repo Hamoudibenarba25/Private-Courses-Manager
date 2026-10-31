@@ -1,0 +1,5 @@
+const { app, BrowserWindow, ipcMain } = require('electron');
+const path = require('path'); const fs = require('fs');
+function createWindow(){ const win=new BrowserWindow({width:1440,height:920,minWidth:900,minHeight:650,autoHideMenuBar:true,webPreferences:{preload:path.join(__dirname,'preload.cjs'),contextIsolation:true,nodeIntegration:false}}); win.loadFile(path.join(__dirname,'..','www','index.html')); }
+ipcMain.handle('ptm:backup', async (_e, json)=>{ const dir=path.join(app.getPath('userData'),'backups'); fs.mkdirSync(dir,{recursive:true}); const obj=JSON.parse(json); const file=path.join(dir,`backup-${obj.id}.json`); fs.writeFileSync(file,json,'utf8'); const files=fs.readdirSync(dir).filter(x=>x.endsWith('.json')).sort().reverse(); for(const old of files.slice(20)) fs.unlinkSync(path.join(dir,old)); return {ok:true,file}; });
+app.whenReady().then(()=>{createWindow();app.on('activate',()=>{if(BrowserWindow.getAllWindows().length===0)createWindow();});}); app.on('window-all-closed',()=>{if(process.platform!=='darwin')app.quit();});
