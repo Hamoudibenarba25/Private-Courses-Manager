@@ -105,3 +105,11 @@ Each payment generates a numbered receipt with school name, teacher name, studen
 - Older unpaid sessions before an advance payment date are not incorrectly covered by that advance payment.
 - Student list fee column now uses a neutral “Fee (by course type)” heading; private groups show the private-course fee and CEFR groups show the CEFR fee.
 - Service-worker cache version bumped to force the updated application files to load.
+
+
+## Version 1.4.0 updates
+- Added Revision Courses with flexible per-session or multi-session payment recording.
+- Private and revision payments now prioritise the oldest unpaid attended sessions before allocating upcoming-session credits.
+- Added a dedicated Subject field to payment records.
+- Group and period reports open a clean printable report window.
+- Revision revenue share is configurable per group (default 75% teacher / 25% school); confirm/change this in group settings.

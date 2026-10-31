@@ -2,7 +2,7 @@
   "id": "/Private-Courses-Manager/",
   "name": "Private Teaching Manager",
   "short_name": "Teaching Manager",
-  "description": "Manage private courses, CEFR groups, attendance, payments and receipts.",
+  "description": "Manage private, CEFR and revision courses, attendance, payments, receipts and reports.",
   "lang": "en",
   "dir": "auto",
   "start_url": "/Private-Courses-Manager/?source=pwa",
