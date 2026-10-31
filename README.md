@@ -91,3 +91,17 @@ Each payment generates a numbered receipt with school name, teacher name, studen
 - Group payment report prints total collected, teacher share and school share with transaction details.
 - Install button is always visible and provides browser-specific fallback instructions; PWA manifest, maskable icon declaration and service-worker cache were refreshed.
 - Private-course payment receipt includes subject and covered session dates.
+
+
+## v1.3.1 update
+- Private-course payments can be recorded before any session is marked. Enter the number of upcoming sessions covered; the student is immediately shown as Paid and prepaid credits are automatically applied to future attended sessions. Receipts show the number of upcoming sessions prepaid.
+
+
+## Version 1.3.2 – prepaid payment matching and fee label correction
+
+- Advance private-course payments are allocated only to attended sessions on or after the payment date.
+- Prepaid session credits remain visible and mark a student as Paid immediately, even before attendance is entered.
+- When the prepaid sessions are subsequently recorded, they are covered by the original payment and are not requested again.
+- Older unpaid sessions before an advance payment date are not incorrectly covered by that advance payment.
+- Student list fee column now uses a neutral “Fee (by course type)” heading; private groups show the private-course fee and CEFR groups show the CEFR fee.
+- Service-worker cache version bumped to force the updated application files to load.
