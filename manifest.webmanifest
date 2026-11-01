@@ -2,7 +2,7 @@
   "id": "./",
   "name": "Private Teaching Manager",
   "short_name": "Teaching Manager",
-  "description": "Manage private, CEFR and revision courses, attendance, payments, receipts and reports in English, French and Arabic.",
+  "description": "Teaching, cycle accounting and student management",
   "lang": "en",
   "dir": "auto",
   "start_url": "./?source=pwa",
