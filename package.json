@@ -1,6 +1,6 @@
 {
   "name": "private-teaching-manager",
-  "version": "1.8.3",
+  "version": "1.8.4",
   "private": true,
   "description": "Private Teaching Manager v1.8.2 \u2014 full-cycle early payment support",
   "scripts": {
