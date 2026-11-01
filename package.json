@@ -1,6 +1,6 @@
 {
   "name": "private-teaching-manager",
-  "version": "1.9.4",
+  "version": "1.9.5",
   "private": true,
   "description": "Private Teaching Manager v1.9.3 \u2014 CEFR-only book and annual insurance accounting",
   "scripts": {
