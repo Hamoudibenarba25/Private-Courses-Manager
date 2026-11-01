@@ -1,8 +1,8 @@
 {
   "name": "private-teaching-manager",
-  "version": "1.8.1",
+  "version": "1.8.2",
   "private": true,
-  "description": "Private Teaching Manager v1.8.1 \u2014 attendance-based cycle fees and debt allocation fixes",
+  "description": "Private Teaching Manager v1.8.2 — full-cycle early payment support",
   "scripts": {
     "web": "npx http-server www -p 4173",
     "cap:sync": "npx cap sync",
