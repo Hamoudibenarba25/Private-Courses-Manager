@@ -1,6 +1,6 @@
 {
   "id": "./",
-  "name": "Private Teaching Manager v1.8.3",
+  "name": "Private Teaching Manager v1.9.3",
   "short_name": "Teaching Manager",
   "description": "Teaching, cycle accounting and student management",
   "lang": "en",
@@ -40,5 +40,6 @@
       "type": "image/png",
       "purpose": "maskable"
     }
-  ]
+  ],
+  "version": "1.9.3"
 }
