@@ -13,7 +13,7 @@
 </style></head>
 <body><div class="app">
 <aside class="sidebar"><div class="brand"><div class="brandmark">PT</div><div class="brandtext"><strong>Teaching Manager</strong><small>Private courses & CEFR</small></div></div>
-<nav class="nav" id="nav"><button data-page="dashboard" class="active"><span class="ico">▦</span><span class="label" data-i="dashboard">Dashboard</span></button><button data-page="students"><span class="ico">♙</span><span class="label" data-i="students">Students</span></button><button data-page="groups"><span class="ico">▤</span><span class="label" data-i="groups">Groups</span></button><button data-page="cycles"><span class="ico">▦</span><span class="label" data-i="cycles">Cycles</span></button><button data-page="payments"><span class="ico">◈</span><span class="label" data-i="payments">Payments</span></button><button data-page="debts"><span class="ico">!</span><span class="label">Student debts</span></button><button data-page="teacher-payments"><span class="ico">¤</span><span class="label">Teacher payments</span></button><button data-page="reports"><span class="ico">▥</span><span class="label" data-i="reports">Reports</span></button><button data-page="settings"><span class="ico">⚙</span><span class="label" data-i="settings">Settings & backups</span></button></nav>
+<nav class="nav" id="nav"><button data-page="dashboard" class="active"><span class="ico">▦</span><span class="label" data-i="dashboard">Dashboard</span></button><button data-page="students"><span class="ico">♙</span><span class="label" data-i="students">Students</span></button><button data-page="groups"><span class="ico">▤</span><span class="label" data-i="groups">Groups</span></button><button data-page="cycles"><span class="ico">▦</span><span class="label" data-i="cycles">Cycles</span></button><button data-page="payments"><span class="ico">◈</span><span class="label" data-i="payments">Payments</span></button><button data-page="debts"><span class="ico">!</span><span class="label" data-ar="ديون الطلاب">Student debts</span></button><button data-page="teacher-payments"><span class="ico">¤</span><span class="label" data-ar="مدفوعات الأستاذ">Teacher payments</span></button><button data-page="reports"><span class="ico">▥</span><span class="label" data-i="reports">Reports</span></button><button data-page="settings"><span class="ico">⚙</span><span class="label" data-i="settings">Settings & backups</span></button></nav>
 <div class="sidefoot">Offline-first · Data stays on this device</div></aside>
 <main class="main"><header class="topbar"><h1 id="pageTitle">Dashboard</h1><div class="top-actions"><select id="language" aria-label="Language"><option value="en">English</option><option value="fr">Français</option><option value="ar">العربية</option></select><button class="btn small" id="undoAction" title="Undo">↶ Undo</button><button class="btn small" id="redoAction" title="Redo">↷ Redo</button><button class="btn primary" id="installApp">⇩ Install app</button><button class="btn primary" id="quickSession">＋ <span data-i="recordSession">Record session</span></button></div></header><div class="content" id="view"></div></main></div>
 <div class="modalback" id="modalback"><div class="modal"><div class="modalhead"><h2 id="modalTitle"></h2><button class="close" id="modalClose">×</button></div><div class="modalbody" id="modalBody"></div><div class="modalfoot" id="modalFoot"></div></div></div><div class="toast" id="toast"></div>
@@ -56,7 +56,79 @@ if(g.type==='private')return;
 let count=sessionsFor(gid),block=16,n=Math.floor(count/block);for(let c=1;c<=n;c++){let key=`${gid}:cefr:${c}`;activeStudents(gid).forEach(s=>{if(c*block<=Number(s.joinedAtSession||0))return;let amount=Number(s.courseFee??g.courseFee??0),exempt=!!s.feeExempt,type='cefr';let existing=data.obligations.find(o=>o.cycleKey===key&&o.studentId===s.id&&o.type===type);if(existing){if(totalPaid(existing.id)===0){existing.amount=exempt?0:amount;existing.exempt=exempt;}return;}if(!exempt&&amount<=0)return;addObligation({cycleKey:key,groupId:gid,studentId:s.id,type,cycle:c,label:`${T('cefrCycle')} ${c}`,amount:exempt?0:amount,exempt,sessionFrom:(c-1)*block+1,sessionTo:c*block});});}}
 function startPrivatePayment(studentId,gid){let g=group(gid);if(!g)return;if(['private','revision'].includes(g.type)){recordPrivatePaymentForm(gid,studentId);return;}recordPaymentForm(null,studentId,null,gid);}
 
-function render(){if(!tr[lang])lang='en';document.documentElement.lang=lang;document.documentElement.dir=lang==='ar'?'rtl':'ltr';document.body.dir=lang==='ar'?'rtl':'ltr';$$('[data-i]').forEach(el=>el.textContent=T(el.dataset.i));$('#pageTitle').textContent=page==='teacher-payments'?'Teacher payments':page==='debts'?'Student debts':T(page==='settings'?'settings':page);$('#language').value=lang;let v=$('#view');({dashboard:renderDashboard,students:renderStudents,groups:renderGroups,cycles:renderCycles,payments:renderPayments,debts:renderDebts,'teacher-payments':renderTeacherPayments,reports:renderReports,settings:renderSettings}[page]||renderDashboard)(v);}
+
+const arUI={
+'Student debts':'ديون الطلاب','Teacher payments & settlements':'مدفوعات الأستاذ والتسويات',
+'Teacher payments':'مدفوعات الأستاذ','Your teaching activity at a glance.':'ملخص نشاطك التعليمي.',
+'All recorded payments':'جميع المدفوعات المسجلة','Remaining student balances':'أرصدة الطلاب المتبقية',
+'75% private · 30% CEFR · 100% books':'٧٥٪ للدروس الخصوصية · ٣٠٪ لدورات الإطار الأوروبي · ١٠٠٪ للكتب',
+'active students':'طلاب نشطون','Private:':'الدروس الخصوصية:','CEFR:':'الإطار الأوروبي:','Books:':'الكتب:',
+'Students with debts':'عدد الطلاب المدينين','Total outstanding':'إجمالي الديون المستحقة',
+'Student':'الطالب','Group':'المجموعة','Unpaid sessions / obligation':'الحصص أو الالتزام غير المدفوع',
+'Dates':'التواريخ','Debt':'الدين','Action':'الإجراء','Pay debts':'تسديد الديون',
+'No outstanding debts.':'لا توجد ديون مستحقة.','No outstanding debts':'لا توجد ديون مستحقة',
+'Cycle-based financial reports':'تقارير مالية حسب الدورة','Cycle':'الدورة','Actual receipts':'المبالغ المقبوضة فعلياً',
+'Debt recovered':'الديون المسترجعة','Teacher share':'حصة الأستاذ','Partner share':'حصة الشريك',
+'Actions':'الإجراءات','Print statement':'طباعة الكشف المالي','No groups available.':'لا توجد مجموعات.',
+'Current-cycle payments received':'المدفوعات المستلمة خلال الدورة الحالية',
+'Previous-cycle debts recovered':'ديون الدورات السابقة المسترجعة',
+'Total actual receipts':'إجمالي المقبوضات الفعلية','School-only charges':'مبالغ خاصة بالمؤسسة فقط',
+'Teacher loans deducted / to deduct':'سلف الأستاذ المخصومة / المطلوب خصمها',
+'Teacher actually received':'المبلغ الذي استلمه الأستاذ فعلياً',
+'Partner actually received':'المبلغ الذي استلمه الشريك فعلياً',
+'Payment transactions recorded in this cycle':'عمليات الدفع المسجلة خلال هذه الدورة',
+'Payment date':'تاريخ الدفع','Amount':'المبلغ','Original cycle / sessions':'الدورة الأصلية / الحصص',
+'Outstanding student debts':'ديون الطلاب المستحقة','Unpaid sessions':'الحصص غير المدفوعة',
+'Amount owed':'المبلغ المستحق','No outstanding debts identified.':'لا توجد ديون مستحقة.',
+'No payments received.':'لم يتم استلام أي مدفوعات.','Generated:':'تاريخ الإنشاء:',
+'Course:':'نوع الدورة:','Print':'طباعة','View statement':'عرض الكشف المالي',
+'Record teacher payment':'تسجيل دفع مستحقات الأستاذ','Record partner payment':'تسجيل دفع مستحقات الشريك',
+'Received':'تم الاستلام','Pending':'قيد الانتظار','Completed / in progress — verify cycle before settlement':'مكتملة / قيد الإنجاز — يرجى التحقق من الدورة قبل التسوية',
+'No sessions recorded':'لم يتم تسجيل حصص','Outstanding loan balance:':'رصيد السلف المتبقي:',
+'Teacher loans / advances':'سلف الأستاذ / التسبيقات','Record teacher loan':'تسجيل سلفة للأستاذ',
+'Settle manually':'تسوية يدوية','Delete':'حذف','Original':'الأصل','Payroll deductions':'الاقتطاعات من المستحقات',
+'Manually settled':'تمت تسويته يدوياً','Remaining':'المتبقي','Repayment:':'طريقة السداد:',
+'Manual / cash':'يدوي / نقداً','Automatic earnings deduction':'اقتطاع تلقائي من المستحقات',
+'Cycle financial statement':'الكشف المالي للدورة','Cycle financial reports':'التقارير المالية للدورات',
+'Overview':'نظرة عامة','Recent sessions':'الحصص الأخيرة','Payment obligations':'المدفوعات المستحقة',
+'No records yet.':'لا توجد سجلات بعد.','All time':'كل الفترة','This month':'هذا الشهر',
+'Date':'التاريخ','Duration':'المدة','Attendance':'الحضور','Present':'حاضر','Absent':'غائب','Late':'متأخر',
+'Paid':'مدفوع','Unpaid':'غير مدفوع','Partial':'مدفوع جزئياً','Status':'الحالة',
+'View':'عرض','Student profile':'ملف الطالب','Record payment':'تسجيل دفعة',
+'Install app':'تثبيت التطبيق','Settings & backups':'الإعدادات والنسخ الاحتياطي',
+'Cycle 1':'الدورة 1','Cycle 2':'الدورة 2','Cycle 3':'الدورة 3','Cycle 4':'الدورة 4',
+'private':'دروس خصوصية','cefr':'الإطار الأوروبي','revision':'دروس المراجعة',
+'Debt recovery':'استرجاع دين','Course fee':'رسوم الدورة','Cycle payment':'دفعة الدورة',
+'Cycle 2 financial statement':'الكشف المالي للدورة 2',
+'Course: private':'نوع الدورة: دروس خصوصية',
+'English Language':'اللغة الإنجليزية','No data':'لا توجد بيانات',
+'Save':'حفظ','Cancel':'إلغاء','Edit':'تعديل','Search':'بحث','All':'الكل',
+'Add student':'إضافة طالب','Add group':'إضافة مجموعة','Add session':'إضافة حصة',
+'Current cycle':'الدورة الحالية','Previous cycle':'الدورة السابقة',
+'Cycle progress':'تقدم الدورة','Completed cycle':'دورة مكتملة','Open cycle':'دورة مفتوحة',
+'Sessions in this cycle:':'عدد الحصص في هذه الدورة:','Amount due for attended sessions':'المبلغ المستحق عن الحصص المحضورة',
+'0 DZD received including debt recovery':'لم يتم استلام أي مبلغ',
+' DZD received including debt recovery':' دج مستلمة، بما في ذلك الديون المسترجعة',
+'All recorded payments':'جميع المدفوعات المسجلة'
+}
+function translateArabicPage(){
+ if(lang!=='ar')return;
+ const rootNode=$('#view');
+ const walker=document.createTreeWalker(rootNode,NodeFilter.SHOW_TEXT);
+ const nodes=[];while(walker.nextNode())nodes.push(walker.currentNode);
+ for(const n of nodes){let s=n.nodeValue.trim();if(!s)continue;
+   if(arUI[s]){n.nodeValue=n.nodeValue.replace(s,arUI[s]);continue;}
+   let out=s;
+   for(const [en,ar] of Object.entries(arUI)){if(en.length>8&&out.includes(en))out=out.replaceAll(en,ar);}
+   if(out!==s)n.nodeValue=n.nodeValue.replace(s,out);
+ }
+ rootNode.querySelectorAll('input[placeholder],textarea[placeholder],button[title]').forEach(el=>{
+   const attr=el.hasAttribute('placeholder')?'placeholder':'title';
+   if(arUI[el.getAttribute(attr)])el.setAttribute(attr,arUI[el.getAttribute(attr)]);
+ });
+}
+
+function render(){if(!tr[lang])lang='en';document.documentElement.lang=lang;document.documentElement.dir=lang==='ar'?'rtl':'ltr';document.body.dir=lang==='ar'?'rtl':'ltr';$$('[data-i]').forEach(el=>el.textContent=T(el.dataset.i));$('#pageTitle').textContent=lang==='ar'?(page==='teacher-payments'?'مدفوعات الأستاذ':page==='debts'?'ديون الطلاب':T(page==='settings'?'settings':page)):(page==='teacher-payments'?'Teacher payments':page==='debts'?'Student debts':T(page==='settings'?'settings':page));$('#language').value=lang;let v=$('#view');({dashboard:renderDashboard,students:renderStudents,groups:renderGroups,cycles:renderCycles,payments:renderPayments,debts:renderDebts,'teacher-payments':renderTeacherPayments,reports:renderReports,settings:renderSettings}[page]||renderDashboard)(v);translateArabicPage();}
 function kpi(label,value,note=''){return `<div class="card"><div class="kpi-label">${label}</div><div class="kpi-value">${value}</div><div class="kpi-note">${note}</div></div>`}
 function renderDashboard(v){let paid=data.payments.reduce((a,p)=>a+Number(p.amount),0),priv=data.payments.filter(p=>p.category==='private').reduce((a,p)=>a+p.amount,0),cefr=data.payments.filter(p=>p.category==='cefr').reduce((a,p)=>a+p.amount,0),books=data.payments.filter(p=>p.category==='book').reduce((a,p)=>a+p.amount,0),earn=priv*.75+cefr*.30+books,owed=data.obligations.reduce((a,o)=>a+remaining(o),0),act=activeStudents().length;
 let recent=[...data.sessions].sort((a,b)=>b.date.localeCompare(a.date)).slice(0,5);let due=data.obligations.filter(o=>remaining(o)>0&&!o.exempt).slice(0,6);
