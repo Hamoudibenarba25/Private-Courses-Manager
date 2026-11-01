@@ -1,4 +1,4 @@
-const CACHE = 'ptm-v1.8.0-cycle-payment-separation';
+const CACHE = 'ptm-v1.8.1-cycle-accounting-fixes';
 const ASSETS = ['./','./index.html','./manifest.webmanifest','./service-worker.js','./icons/icon-192.png','./icons/icon-512.png'];
 self.addEventListener('install', event => { event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(ASSETS))); self.skipWaiting(); });
 self.addEventListener('activate', event => { event.waitUntil((async()=>{const keys=await caches.keys();await Promise.all(keys.filter(k=>k.startsWith('ptm-')&&k!==CACHE).map(k=>caches.delete(k)));await self.clients.claim();})()); });
